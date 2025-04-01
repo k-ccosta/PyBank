@@ -1,0 +1,43 @@
+Projeto PyBank
+
+Sistema bancário simples em Python, desenvolvido como desafio introdutório para treinar lógica de programação, controle de fluxo e estrutura de dados.
+
+Descrição
+
+Fomos contratados por um grande banco para desenvolver a primeira versão de seu sistema bancário em Python. A aplicação deve atender aos seguintes requisitos iniciais:
+
+- Realizar depósitos
+- Efetuar saques
+- Exibir um extrato bancário com todas as movimentações
+
+A versão 1 do sistema é focada em apenas um único usuário, portanto não há necessidade de autenticação, múltiplas contas ou integração com banco de dados.
+
+Funcionalidades
+
+Operação de Depósito
+- O sistema deve permitir apenas valores positivos.
+- Cada depósito é registrado no histórico e adicionado ao saldo.
+- Os depósitos devem ser exibidos no extrato.
+
+Operação de Saque
+- O saque só é permitido se houver saldo disponível.
+- Há um limite diário de 3 saques.
+- Cada saque deve ter valor máximo de R$ 500,00.
+- Saques realizados são registrados no extrato com valor negativo.
+
+Mensagens de erro são exibidas em casos como:
+- Tentativa de saque maior que o saldo
+- Mais de 3 saques em um dia
+- Valor do saque acima de R$ 500,00
+
+Operação de Extrato
+- Exibe todos os depósitos e saques realizados.
+- Exibe o saldo atual da conta ao final.
+- Todos os valores são formatados no estilo monetário (R$ xxx.xx).
+
+Regras de Negócio
+
+- Saques por dia: Máximo de 3
+- Valor máximo por saque: R$ 500,00
+- Depósitos: Somente valores positivos
+- Formato de exibição monetária: R$ xxx.xx
