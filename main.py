@@ -1,4 +1,5 @@
 import os
+import textwrap
 
 opcoes_menu = ["Depositar", "Sacar", "Extrato", "Criar usuário", "Criar conta", "Listar contas", "Sair"]
 
@@ -178,11 +179,11 @@ def listar_contas(contas):
         linha = f"""\
             Agência:\t{conta['agencia']}
             C/C:\t\t{conta['numero_conta']}
-            Titular:\t\t{conta['usuario']['nome']}
+            Titular:\t{conta['usuario']['nome']}
         """
         print("="*100)
-        # print(textwrap.dedent(linha))
-        print(linha)
+        print(textwrap.dedent(linha))
+        # print(linha)
 
         input("\nPressione 'Enter' para continuar...")
 
