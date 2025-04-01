@@ -7,6 +7,7 @@ LIMITE_POR_SAQUE = 500
 extrato = ""
 numero_saques = 0
 LIMITE_SAQUES_DIARIOS = 3
+usuarios = []
 
 
 def limpar_tela():
@@ -83,7 +84,7 @@ def sacar(*, saldo, valor, extrato, LIMITE_POR_SAQUE, numero_saques, LIMITE_SAQU
 
     return saldo, extrato 
 
-def exibir_extrato():
+def exibir_extrato(saldo, /, *, extrato):
     limpar_tela()
 
     print("Não foram realizadas movimentações." if not extrato else extrato)
@@ -92,6 +93,57 @@ def exibir_extrato():
     input("\nPressione 'enter' para sair ")
 
     limpar_tela()    
+
+def filtrar_usuario(cpf, usuarios):
+    """Retorna o usuário com o CPF correspondente, se existir."""
+    return next((usuario for usuario in usuarios if usuario["cpf"] == cpf), None)
+
+def criar_usuario(usuarios):
+    limpar_tela ()
+
+    cpf = input("Informe seu CPF: ").replace("-", "").replace(".", "")
+
+    usuario = filtrar_usuario(cpf, usuarios)
+
+    if usuario:
+        print("\n❗ Já existe usuário com esse CPF cadastrado!")
+
+        input("\nPressione 'Enter' para continuar...")
+
+        limpar_tela()
+        
+        return
+
+    nome = input("Informe o nome completo: ")
+    data_nascimento = input("Informe a data de nascimento (dd-mm-aaaa): ")
+
+    print("\nEndereço\n")
+    logradouro = input("Logradouro: ")
+    nro = input("Número: ")
+    bairro = input("Bairro: ")
+    cidade = input("Cidade: ")
+    estado = input("Estado (sigla): ")
+
+    endereco = {
+        "logradouro": logradouro,
+        "nro": nro,
+        "bairro": bairro,
+        "cidade": cidade,
+        "estado": estado
+    }
+
+    usuarios.append({
+        "nome": nome,
+        "data_nascimento": data_nascimento,
+        "cpf": cpf,
+        "endereco": endereco
+    })
+
+    print("\n✅ Usuário criado com sucesso!")
+
+    input("\nPressione 'Enter' para continuar...")
+
+    limpar_tela()
 
 while True:
     exibir_titulo()
@@ -116,7 +168,7 @@ while True:
         )
     
     elif opcao_selecionada == 3:
-        exibir_extrato()
+        exibir_extrato(saldo, extrato=extrato)
     
     elif opcao_selecionada == 4:
         ...
@@ -125,7 +177,7 @@ while True:
         ...
     
     elif opcao_selecionada == 6:
-        ...
+        criar_usuario(usuarios)
     
     else:
         break
