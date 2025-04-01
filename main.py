@@ -147,12 +147,19 @@ def criar_usuario(usuarios):
     limpar_tela()
 
 def criar_conta(agencia, numero_conta, usuarios):
+    limpar_tela()
+
     cpf = input("Informe seu CPF: ").replace("-", "").replace(".", "")
 
     usuario = filtrar_usuario(cpf, usuarios)
 
     if usuario:
         print("\nConta criada com sucesso!")
+
+        input("\nPressione 'Enter' para continuar...")
+
+        limpar_tela()
+
         return {"agencia":agencia, "numero_conta":numero_conta, "usuario":usuario}
     
     print("\nUsuário não encontrado, fluxo de criação de conta encerrado")
@@ -162,6 +169,24 @@ def criar_conta(agencia, numero_conta, usuarios):
     limpar_tela()
 
     return None
+
+def listar_contas(contas):
+    
+    limpar_tela()
+
+    for conta in contas:
+        linha = f"""\
+            Agência:\t{conta['agencia']}
+            C/C:\t\t{conta['numero_conta']}
+            Titular:\t\t{conta['usuario']['nome']}
+        """
+        print("="*100)
+        # print(textwrap.dedent(linha))
+        print(linha)
+
+        input("\nPressione 'Enter' para continuar...")
+
+        limpar_tela()
 
 while True:
     exibir_titulo()
@@ -199,7 +224,7 @@ while True:
             contas.append(conta)
     
     elif opcao_selecionada == 6:
-        ...
+        listar_contas(contas)
     
     else:
         break
