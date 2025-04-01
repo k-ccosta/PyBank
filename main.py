@@ -1,6 +1,6 @@
 import os
 
-opcoes_menu = ["Depositar", "Sacar", "Extrato", "Nova Conta", "Listar Contas", "Novo Usuário", "Sair"]
+opcoes_menu = ["Depositar", "Sacar", "Extrato", "Criar usuário", "Criar conta", "Listar contas", "Sair"]
 
 saldo = 0
 LIMITE_POR_SAQUE = 500
@@ -8,7 +8,8 @@ extrato = ""
 numero_saques = 0
 LIMITE_SAQUES_DIARIOS = 3
 usuarios = []
-
+AGENCIA = "0001"
+contas = []
 
 def limpar_tela():
     os.system("cls" if os.name == "nt" else "clear")    
@@ -145,6 +146,23 @@ def criar_usuario(usuarios):
 
     limpar_tela()
 
+def criar_conta(agencia, numero_conta, usuarios):
+    cpf = input("Informe seu CPF: ").replace("-", "").replace(".", "")
+
+    usuario = filtrar_usuario(cpf, usuarios)
+
+    if usuario:
+        print("\nConta criada com sucesso!")
+        return {"agencia":agencia, "numero_conta":numero_conta, "usuario":usuario}
+    
+    print("\nUsuário não encontrado, fluxo de criação de conta encerrado")
+    
+    input("\nPressione 'Enter' para continuar...")
+
+    limpar_tela()
+
+    return None
+
 while True:
     exibir_titulo()
 
@@ -171,13 +189,17 @@ while True:
         exibir_extrato(saldo, extrato=extrato)
     
     elif opcao_selecionada == 4:
-        ...
+        criar_usuario(usuarios)
     
     elif opcao_selecionada == 5:
-        ...
+        numero_conta = len(contas)+1
+        conta = criar_conta(AGENCIA, numero_conta, usuarios)
+
+        if conta:
+            contas.append(conta)
     
     elif opcao_selecionada == 6:
-        criar_usuario(usuarios)
+        ...
     
     else:
         break
