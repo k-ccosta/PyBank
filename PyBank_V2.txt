@@ -1,0 +1,63 @@
+Projeto PyBank - Versão 2
+
+Sistema bancário modularizado em Python, evoluindo a partir da versão inicial para incluir múltiplos usuários, contas e uma estrutura de funções mais organizada. Esta versão visa treinar o uso de argumentos por posição, nomeados, manipulação de estruturas de dados como listas e dicionários, e boas práticas de modularização.
+
+Descrição
+
+Fomos contratados para continuar a evolução do sistema bancário PyBank. Na versão 2, o foco é tornar o código mais modular, permitir múltiplos usuários e múltiplas contas bancárias, além de separar claramente cada funcionalidade em funções específicas.
+
+A aplicação agora deve atender aos seguintes requisitos:
+
+- Realizar depósitos com funções reutilizáveis
+- Efetuar saques com controle de limite e frequência
+- Exibir extratos formatados
+- Criar e armazenar usuários únicos com base no CPF
+- Criar contas bancárias vinculadas a usuários existentes
+
+Funcionalidades
+
+Operação de Saque
+- Deve ser implementada em uma função com argumentos nomeados (keyword-only).
+- Deve validar: saldo suficiente, limite por saque (R$ 500), máximo de 3 saques diários.
+- O retorno esperado inclui saldo e extrato atualizados.
+
+Operação de Depósito
+- Deve ser implementada em uma função com argumentos por posição (positional-only).
+- Somente valores positivos são aceitos.
+- O retorno esperado inclui saldo e extrato atualizados.
+
+Operação de Extrato
+- Deve ser implementada em uma função que recebe argumentos por posição e nome.
+- Exibe todas as movimentações e o saldo atual formatado.
+- Argumentos: saldo (posicional), extrato (nomeado).
+
+Criação de Usuários
+- Usuários são armazenados em uma lista.
+- Cada usuário contém: nome, data de nascimento, CPF e endereço.
+- Endereço deve ser uma string no formato: logradouro, nro - bairro - cidade/sigla estado.
+- Não é permitido cadastrar dois usuários com o mesmo CPF (validação obrigatória).
+
+Criação de Contas Correntes
+- As contas são armazenadas em uma lista.
+- Cada conta contém: agência (fixa: "0001"), número da conta (sequencial), e um usuário.
+- Um usuário pode ter mais de uma conta, mas uma conta pertence a apenas um usuário.
+- O CPF é utilizado como chave para localizar o usuário ao criar a conta.
+
+Regras de Negócio
+
+- Saques por dia: Máximo de 3
+- Valor máximo por saque: R$ 500,00
+- Depósitos: Somente valores positivos
+- Formato de exibição monetária: R$ xxx.xx
+- CPF deve ser único por usuário
+- Número da conta deve ser sequencial e automático
+- Agência padrão: "0001"
+
+Dicas de Implementação
+
+- Use funções para separar cada operação do sistema.
+- Utilize listas para armazenar usuários e contas.
+- Valide entradas e forneça mensagens claras ao usuário.
+- Ao criar conta, filtre a lista de usuários pelo CPF para vinculação correta.
+
+Essa versão foca no uso de boas práticas com Python, modularização e preparação para futuras expansões com orientação a objetos ou frameworks web.
