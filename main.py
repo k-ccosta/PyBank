@@ -49,29 +49,40 @@ def depositar(saldo, valor, extrato, /):
     input("\nPressione 'Enter' para continuar...")
     limpar_tela()
     return saldo, extrato
-def sacar():
-    global saldo, extrato, numero_saques
 
+def sacar(*, saldo, valor, extrato, LIMITE_POR_SAQUE, numero_saques, LIMITE_SAQUES_DIARIOS):
+    
     limpar_tela()
 
-    valor = float(input("Informe o valor do saque R$: "))
+    excedeu_saldo = valor > saldo
+    excedeu_limite = valor > LIMITE_POR_SAQUE
+    excedeu_saques_diarios = numero_saques >= LIMITE_SAQUES_DIARIOS
 
-    if valor > saldo:
+    if valor <= 0:
+        print("Operação falhou! O valor informado é inválido")
+        input("\nPressione 'Enter' para para continuar...")
+        limpar_tela()
+        return saldo, extrato
+    if excedeu_saldo:
         print(f"Operação falhou! Saldo insuficiente\nSaldo R$ {saldo}")
-    elif valor > LIMITE_POR_SAQUE:
+        return saldo, extrato
+    if excedeu_limite:
         print(f"Operação falhou! O valor do saque execede o limite\nLimite R$ {LIMITE_POR_SAQUE}")
-    elif numero_saques >= LIMITE_SAQUES_DIARIOS:
+        return saldo, extrato
+    if excedeu_saques_diarios:     
         print(f"Operação falhou! Número máximo de saques excedito.\nLimite de saques diários: {LIMITE_SAQUES_DIARIOS}")
-    elif valor < 0:
-        print("Operação falhou! O valr informado é inválido")
-    else:
-        saldo -= valor
-        extrato += f"Saque: R$ {valor:.2f}\n"
-        numero_saques += 1
-
+        return saldo, extrato
+    
+    saldo -= valor
+    extrato += f"Saque: R$ {valor:.2f}\n"
+    numero_saques += 1
+    print("\nSaque realizado com sucesso!")
+ 
     input("\nPressione 'enter' para sair ")
-
     limpar_tela()
+
+    return saldo, extrato 
+
 def exibir_extrato():
     limpar_tela()
 
@@ -91,18 +102,31 @@ while True:
 
     if opcao_selecionada == 1:
         valor = float(input("Informe o valor do depósito R$: "))
-
         saldo, extrato = depositar(saldo, valor, extrato)
+    
     elif opcao_selecionada == 2:
-        sacar()
+        valor = float(input("Informe o valor do saque R$: "))
+        saldo, extrato = sacar(
+            saldo = saldo,
+            valor = valor,
+            extrato = extrato,
+            LIMITE_POR_SAQUE = LIMITE_POR_SAQUE,
+            numero_saques = numero_saques,
+            LIMITE_SAQUES_DIARIOS = LIMITE_SAQUES_DIARIOS           
+        )
+    
     elif opcao_selecionada == 3:
         exibir_extrato()
+    
     elif opcao_selecionada == 4:
         ...
+    
     elif opcao_selecionada == 5:
         ...
+    
     elif opcao_selecionada == 6:
         ...
+    
     else:
         break
 
