@@ -1,6 +1,6 @@
 import os
 
-opcoes_menu = ["Depositar", "Sacar", "Extrato", "Sair"]
+opcoes_menu = ["Depositar", "Sacar", "Extrato", "Nova Conta", "Listar Contas", "Novo Usuário", "Sair"]
 
 saldo = 0
 LIMITE_POR_SAQUE = 500
@@ -33,23 +33,22 @@ def selecionando_opcao():
         except ValueError:
             print("\nPor favor! Selecione uma opção válida")
 
-def depositar():
-    global saldo, extrato  # <- declare as variáveis globais
-
-    limpar_tela()
-
-    valor = float(input("Informe o valor do depósito R$: "))
-
-    if valor > 0:
-        saldo += valor
-        extrato += f"Depósito: R$ {valor:.2f}\n"
-    else:
-        print("[ERROR] - O valor informado é inválido")
+def depositar(saldo, valor, extrato, /):
     
-    input("\nPressione 'enter' para sair ")
-
     limpar_tela()
+    if valor <= 0:
+        print("Operação falhou! O valor informado é inválido")
+        input("\nPressione 'Enter' para para continuar...")
+        limpar_tela()
+        return saldo, extrato
+    
+    saldo += valor
+    extrato += f"Depósito: R$ {valor:.2f}\n"
+    print("\n✅ Depósito realizado com sucesso!")
 
+    input("\nPressione 'Enter' para continuar...")
+    limpar_tela()
+    return saldo, extrato
 def sacar():
     global saldo, extrato, numero_saques
 
@@ -73,7 +72,6 @@ def sacar():
     input("\nPressione 'enter' para sair ")
 
     limpar_tela()
-
 def exibir_extrato():
     limpar_tela()
 
@@ -92,11 +90,19 @@ while True:
     opcao_selecionada = selecionando_opcao()
 
     if opcao_selecionada == 1:
-        depositar()
+        valor = float(input("Informe o valor do depósito R$: "))
+
+        saldo, extrato = depositar(saldo, valor, extrato)
     elif opcao_selecionada == 2:
         sacar()
     elif opcao_selecionada == 3:
         exibir_extrato()
+    elif opcao_selecionada == 4:
+        ...
+    elif opcao_selecionada == 5:
+        ...
+    elif opcao_selecionada == 6:
+        ...
     else:
         break
 
